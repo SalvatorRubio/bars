@@ -1,8 +1,9 @@
 import { Navigate } from "react-router-dom";
+import { useAuth } from "../hook/useAuth";
 
 const RequireAuth = ({ children }) => {
-  const user = sessionStorage.getItem("userName");
-  if (!user) return <Navigate to="/login" />;
+  const { user } = useAuth();
+  if (!user) return <Navigate to="/" />;
   return children;
 };
 
