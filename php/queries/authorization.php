@@ -7,12 +7,6 @@
 
   $data = json_decode(file_get_contents('php://input'), true);
 
-  // $login = '';
-  // $password = '';
 
-  // if($data) {
-  // $login = $data['login'];
-  // $password = $data['password'];
-  // }
 
-  print json_encode($student->selectMarks(1, "2022-03-26", "2022-04-20"));
+  print json_encode($student->authorization($data['login'], $data['password']));
