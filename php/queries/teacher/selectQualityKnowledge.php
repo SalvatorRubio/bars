@@ -6,5 +6,10 @@ require_once $_SERVER['DOCUMENT_ROOT'].'/php/classes/Teacher.php';
 
 
 $data = json_decode(file_get_contents('php://input'), true);
+if(strlen($data['lessonType']) === 0) {
+  $lesson_type = 'lesson_type';
+} else {
+  $lesson_type = $data['lessonType'];
+}
 
-print json_encode($teacher->selectKnowledge('selectQualityKnowledge', $data['startDate'], $data['endDate'], $data['group']));
+print json_encode($teacher->selectKnowledge('selectQualityKnowledge', $data['startDate'], $data['endDate'], $data['discipline'],$data['group'], $lesson_type));

@@ -12,42 +12,44 @@ class ClassroomTeacher extends User {
     $query = $stmt->fetchAll(PDO::FETCH_ASSOC);
     return $query;
   }
-  //Получение фамилий, имен и оценок, получение дат обучения, абсолютную успеваемость и качество знаний
-  // public function selectDatesAndMarks($procedure, $teacher_id, $group_id, $discipline_id, $lesson_type, $date_from, $date_to) {
-  //   $stmt = $this->dbh->prepare('CALL '.$procedure.'(?,?,?,?,?,?)');
-  //   $stmt->bindParam(1, $teacher_id, PDO::PARAM_STR, 4000);
-  //   $stmt->bindParam(2, $group_id, PDO::PARAM_STR, 4000);
-  //   $stmt->bindParam(3, $discipline_id, PDO::PARAM_STR, 4000);
-  //   $stmt->bindParam(4, $lesson_type, PDO::PARAM_STR, 4000);
-  //   $stmt->bindParam(5, $date_from, PDO::PARAM_STR, 4000);
-  //   $stmt->bindParam(6, $date_to, PDO::PARAM_STR, 4000);
-  //   $stmt->execute();
-  //   $query = $stmt->fetchAll(PDO::FETCH_ASSOC);
-  //   return $query;
-  // }
 
-  // public function selectMiddleMarksByTypes($teacher_id, $group_id, $discipline_id, $lesson_type) {
-  //   $stmt = $this->dbh->prepare('CALL selectMiddleMarksByTypes(?,?,?,?)');
-  //   $stmt->bindParam(1, $teacher_id, PDO::PARAM_STR, 4000);
-  //   $stmt->bindParam(2, $group_id, PDO::PARAM_STR, 4000);
-  //   $stmt->bindParam(3, $discipline_id, PDO::PARAM_STR, 4000);
-  //   $stmt->bindParam(4, $lesson_type, PDO::PARAM_STR, 4000);
-  //   $stmt->execute();
-  //   $query = $stmt->fetchAll(PDO::FETCH_ASSOC);
-  //   return $query;
-  // }
-
-
-
-
-
-
-  public function selectMiddleMarks($student, $start_date, $end_date)
+  public function selectKnowledgeForAttestation($procedure, $start_date, $end_date, $discipline, $group)
   {
-    $stmt = $this->dbh->prepare('CALL selectMiddleMarksForClassroomTeacher(?,?,?)');
-    $stmt->bindParam(1, $student, PDO::PARAM_INT, 4000);
+    $stmt = $this->dbh->prepare('CALL '.$procedure.'(?,?,?,?)');
+    $stmt->bindParam(1, $start_date, PDO::PARAM_STR, 4000);
+    $stmt->bindParam(2, $end_date, PDO::PARAM_INT, 4000);
+    $stmt->bindParam(3, $discipline, PDO::PARAM_INT, 4000);
+    $stmt->bindParam(4, $group, PDO::PARAM_INT, 4000);
+    $stmt->execute();
+    $query = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    return $query;
+  }
+
+  public function selectKnowledgeForSession($procedure, $discipline, $group)
+  {
+    $stmt = $this->dbh->prepare('CALL '.$procedure.'(?,?)');
+    $stmt->bindParam(1, $discipline, PDO::PARAM_INT, 4000);
+    $stmt->bindParam(2, $group, PDO::PARAM_INT, 4000);
+    $stmt->execute();
+    $query = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    return $query;
+  }
+
+  public function selectMiddleMarksAttestation($group, $start_date, $end_date)
+  {
+    $stmt = $this->dbh->prepare('CALL selectMiddleMarksAttestationForClassroomTeacher(?,?,?)');
+    $stmt->bindParam(1, $group, PDO::PARAM_INT, 4000);
     $stmt->bindParam(2, $start_date, PDO::PARAM_STR, 4000);
     $stmt->bindParam(3, $end_date, PDO::PARAM_INT, 4000);
+    $stmt->execute();
+    $query = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    return $query;
+  }
+
+  public function selectMiddleMarksSession($group)
+  {
+    $stmt = $this->dbh->prepare('CALL selectMiddleMarksSessionForClassroomTeacher(?)');
+    $stmt->bindParam(1, $group, PDO::PARAM_INT, 4000);
     $stmt->execute();
     $query = $stmt->fetchAll(PDO::FETCH_ASSOC);
     return $query;

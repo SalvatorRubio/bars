@@ -37,6 +37,7 @@ const SelectGroup = ({ group, setGroup }) => {
           label="Группа"
           onChange={(e) => {
             setGroup(e.target.value);
+            sessionStorage.setItem("group", e.target.value);
           }}
         >
           {groupsArr.map((item) => {

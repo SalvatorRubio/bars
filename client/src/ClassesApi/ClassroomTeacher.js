@@ -26,14 +26,77 @@ export class ClassTeacher {
       .then((res) => res.data);
   }
 
-  static getMiddleMarks(student, firstDate, secondDate) {
+  static getMiddleMarksAttestation(group, firstDate, secondDate) {
+    let dateFrom = format(new Date(firstDate), "yyyy-MM-dd");
+    let dateTo = format(new Date(secondDate), "yyyy-MM-dd");
+
+    return axios
+      .post("classroomTeacher/selectMiddleMarksAttestation.php", {
+        group: group,
+        dateFrom: dateFrom,
+        dateTo: dateTo,
+      })
+      .then((res) => res.data);
+  }
+
+  static getMiddleMarksSession(group) {
+    return axios
+      .post("classroomTeacher/selectMiddleMarksSession.php", {
+        group: group,
+      })
+      .then((res) => res.data);
+  }
+
+  static getQualityAttestationKnowledge(
+    firstDate,
+    secondDate,
+    discipline,
+    group
+  ) {
     let dateFrom = format(new Date(firstDate), "yyyy-MM-dd");
     let dateTo = format(new Date(secondDate), "yyyy-MM-dd");
     return axios
-      .post("classroomTeacher/selectMiddleMarks.php", {
-        id: student,
+      .post("classroomTeacher/selectQualityAttestationKnowledge.php", {
         dateFrom: dateFrom,
         dateTo: dateTo,
+        discipline: discipline,
+        group: group,
+      })
+      .then((res) => res.data);
+  }
+
+  static getAbsoluteAttestationKnowledge(
+    firstDate,
+    secondDate,
+    discipline,
+    group
+  ) {
+    let dateFrom = format(new Date(firstDate), "yyyy-MM-dd");
+    let dateTo = format(new Date(secondDate), "yyyy-MM-dd");
+    return axios
+      .post("classroomTeacher/selectAbsoluteAttestationKnowledge.php", {
+        dateFrom: dateFrom,
+        dateTo: dateTo,
+        discipline: discipline,
+        group: group,
+      })
+      .then((res) => res.data);
+  }
+
+  static getAbsoluteSessionKnowledge(discipline, group) {
+    return axios
+      .post("classroomTeacher/selectAbsoluteSessionKnowledge.php", {
+        discipline: discipline,
+        group: group,
+      })
+      .then((res) => res.data);
+  }
+
+  static getQualitySessionKnowledge(discipline, group) {
+    return axios
+      .post("classroomTeacher/selectQualitySessionKnowledge.php", {
+        discipline: discipline,
+        group: group,
       })
       .then((res) => res.data);
   }

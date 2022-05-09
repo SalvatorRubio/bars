@@ -14,15 +14,22 @@ const TableMain = (props) => {
   const [value, setValue] = useState();
   const [absoluteKnowledge, setAbsoluteKnowledge] = useState([]);
   const [qualityKnowledge, setQualityKnowledge] = useState([]);
-
   useEffect(() => {
-    TeacherApi.getQualityKnowledge(dates[0], dates[1], group).then((res) =>
-      setQualityKnowledge(res)
-    );
-    TeacherApi.getAbsoluteKnowledge(dates[0], dates[1], group).then((res) =>
-      setAbsoluteKnowledge(res)
-    );
-  }, [group, dates, value]);
+    TeacherApi.getQualityKnowledge(
+      dates[0],
+      dates[1],
+      discipline,
+      group,
+      lessonType
+    ).then((res) => setQualityKnowledge(res));
+    TeacherApi.getAbsoluteKnowledge(
+      dates[0],
+      dates[1],
+      discipline,
+      group,
+      lessonType
+    ).then((res) => setAbsoluteKnowledge(res));
+  }, [group, dates, value, discipline, lessonType]);
 
   useEffect(() => {
     TeacherApi.getStudentAndMarks(

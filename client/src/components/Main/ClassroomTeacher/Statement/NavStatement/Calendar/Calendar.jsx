@@ -14,7 +14,6 @@ const Calendar = ({ dates, setDates }) => {
         display: "flex",
         flexDirection: "column",
         width: "400px",
-        mb: 2,
       }}
     >
       <LocalizationProvider locale={ruLocale} dateAdapter={AdapterDateFns}>

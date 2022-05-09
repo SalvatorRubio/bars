@@ -30,7 +30,7 @@ const Main = () => {
             element={<RequireAuth>{role === 3 && <Student />}</RequireAuth>}
           />
           <Route
-            path="/classroom-teacher"
+            path="/classroom-teacher/*"
             element={
               <RequireAuth>{role === 4 && <ClassroomTeacher />}</RequireAuth>
             }

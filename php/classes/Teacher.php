@@ -72,12 +72,14 @@ class Teacher extends User {
     $stmt->execute();
   }
 
-  public function selectKnowledge($procedure, $start_date, $end_date, $group)
+  public function selectKnowledge($procedure, $start_date, $end_date, $discipline, $group, $type)
   {
-    $stmt = $this->dbh->prepare('CALL '.$procedure.'(?,?,?)');
+    $stmt = $this->dbh->prepare('CALL '.$procedure.'(?,?,?,?,?)');
     $stmt->bindParam(1, $start_date, PDO::PARAM_STR, 4000);
     $stmt->bindParam(2, $end_date, PDO::PARAM_INT, 4000);
-    $stmt->bindParam(3, $group, PDO::PARAM_INT, 4000);
+    $stmt->bindParam(3, $discipline, PDO::PARAM_INT, 4000);
+    $stmt->bindParam(4, $group, PDO::PARAM_INT, 4000);
+    $stmt->bindParam(5, $type, PDO::PARAM_STR, 4000);
     $stmt->execute();
     $query = $stmt->fetchAll(PDO::FETCH_ASSOC);
     return $query;

@@ -1,12 +1,10 @@
-import { Box, Paper } from "@mui/material";
+import { Box } from "@mui/material";
 import React, { useState, useEffect } from "react";
-import TableHeaderJournal from "./TableHeaderJournal/TableHeaderJournal";
-import Table from "@mui/material/Table";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableBodyJournal from "./TableBodyJournal/TableBodyJournal";
 import { ClassTeacher } from "../../../../ClassesApi/ClassroomTeacher";
 import NavStatement from "./NavStatement/NavStatement";
+import { Routes, Route } from "react-router-dom";
+import TableAttestation from "./TableAttestation/TableAttestation";
+import TableSession from "./TableSession/TableSession";
 
 const date = new Date();
 const firstDate = new Date(date.setDate(date.getDate() - 14));
@@ -15,6 +13,7 @@ const lastDate = new Date();
 const Statement = () => {
   const [dates, setDates] = useState([firstDate, lastDate]);
   const [group, setGroup] = useState("");
+  const [statement, setStatement] = useState("");
   const [disciplines, setDisciplines] = useState([]);
   useEffect(() => {
     ClassTeacher.getDisciplines(group).then((res) => setDisciplines(res));
@@ -27,21 +26,36 @@ const Statement = () => {
         group={group}
         dates={dates}
         setDates={setDates}
+        statement={statement}
+        setStatement={setStatement}
       />
-      <Paper sx={{ width: "100%" }}>
-        <TableContainer sx={{ maxHeight: 750 }}>
-          <Table stickyHeader aria-label="sticky table">
-            <TableHead>
-              <TableHeaderJournal disciplines={disciplines} />
-            </TableHead>
-            <TableBodyJournal
-              group={group}
-              disciplines={disciplines}
-              dates={dates}
-            />
-          </Table>
-        </TableContainer>
-      </Paper>
+      <Routes>
+        {group && dates && (
+          <Route
+            path="table-attestation"
+            element={
+              <TableAttestation
+                disciplines={disciplines}
+                group={group}
+                dates={dates}
+                statement={statement}
+              />
+            }
+          />
+        )}
+        {group && (
+          <Route
+            path="table-session"
+            element={
+              <TableSession
+                disciplines={disciplines}
+                group={group}
+                statement={statement}
+              />
+            }
+          />
+        )}
+      </Routes>
     </Box>
   );
 };

@@ -56,17 +56,6 @@ export class TeacherApi {
       .then((res) => res.data);
   }
 
-  static getMiddleMarksByTypes(teacher, group, discipline, types) {
-    return axios
-      .post("teacher/selectMiddleMarksByTypes.php", {
-        teacher: teacher,
-        group: group,
-        discipline: discipline,
-        types: types.join(", "),
-      })
-      .then((res) => res.data);
-  }
-
   static updateMark(student, shedule, mark) {
     return axios
       .post("teacher/updateMark.php", {
@@ -119,19 +108,41 @@ export class TeacherApi {
       .then((res) => res.data);
   }
 
-  static getQualityKnowledge(firstDate, secondDate, group) {
+  static getQualityKnowledge(
+    firstDate,
+    secondDate,
+    discipline,
+    group,
+    lessonType
+  ) {
     let dateFrom = format(new Date(firstDate), "yyyy-MM-dd");
     let dateTo = format(new Date(secondDate), "yyyy-MM-dd");
+    let lessonTypeArr = [];
+    lessonType.map((item) => {
+      return lessonTypeArr.push(`"${item}"`);
+    });
     return axios
       .post("teacher/selectQualityKnowledge.php", {
         startDate: dateFrom,
         endDate: dateTo,
         group: group,
+        discipline: discipline,
+        lessonType: lessonTypeArr.join(", "),
       })
       .then((res) => res.data);
   }
 
-  static getAbsoluteKnowledge(firstDate, secondDate, group) {
+  static getAbsoluteKnowledge(
+    firstDate,
+    secondDate,
+    discipline,
+    group,
+    lessonType
+  ) {
+    let lessonTypeArr = [];
+    lessonType.map((item) => {
+      return lessonTypeArr.push(`"${item}"`);
+    });
     let dateFrom = format(new Date(firstDate), "yyyy-MM-dd");
     let dateTo = format(new Date(secondDate), "yyyy-MM-dd");
     return axios
@@ -139,6 +150,8 @@ export class TeacherApi {
         startDate: dateFrom,
         endDate: dateTo,
         group: group,
+        discipline: discipline,
+        lessonType: lessonTypeArr.join(", "),
       })
       .then((res) => res.data);
   }

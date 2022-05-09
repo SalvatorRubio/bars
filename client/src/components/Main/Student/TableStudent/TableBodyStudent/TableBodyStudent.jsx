@@ -96,19 +96,3 @@ const TableBodyStudent = ({ dates }) => {
 };
 
 export default TableBodyStudent;
-// BEGIN
-// DECLARE k date;
-// set k = start_date;
-// drop table if exists time_table;
-// CREATE TEMPORARY TABLE time_table (
-// id int(11) unsigned NOT NULL AUTO_INCREMENT PRIMARY KEY,
-// name varchar(255) NOT NULL,
-// cur_date varchar(255) NOT NULL,
-// mark varchar(255) NULL
-// ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
-// while k<end_date do
-// select DATE_ADD(k, INTERVAL 1 DAY) into k;
-// INSERT INTO time_table(select NULL, name,k, GROUP_CONCAT(mark) from journal, discipline where journal.student_id = student and shedule_id in (SELECT shedule_id from shedule WHERE cur_date = k) and discipline.discipline_id = discip_id GROUP BY name, k);
-// end while;
-// select name,mark, DATE_FORMAT(cur_date, '%d.%m') as cur_date from time_table;
-// END
