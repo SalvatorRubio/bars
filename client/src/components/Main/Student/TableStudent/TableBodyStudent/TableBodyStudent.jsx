@@ -1,3 +1,5 @@
+/* eslint-disable array-callback-return */
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -15,7 +17,6 @@ const TableBodyStudent = ({ dates }) => {
     StudentApi.getDisciplines(group).then((res) => {
       setDisciplines(res);
     });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   useEffect(() => {
     StudentApi.getDates(dates[0], dates[1]).then((res) => setArrDates(res));
@@ -41,14 +42,12 @@ const TableBodyStudent = ({ dates }) => {
         setMarks([...arr]);
       });
     });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [disciplines, dates]);
 
   useEffect(() => {
     StudentApi.getMiddleMarks(id, dates[0], dates[1]).then((res) =>
       setMiddleMarks(res)
     );
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [disciplines, dates]);
 
   return (
@@ -59,7 +58,6 @@ const TableBodyStudent = ({ dates }) => {
             <TableCell>{item.name}</TableCell>
             {arrDates.map((date) => {
               if (item.mark.find((el) => el.cur_date === date.cur_date)) {
-                //eslint-disable-next-line array-callback-return
                 return item.mark.map((el) => {
                   if (el.cur_date === date.cur_date) {
                     return (

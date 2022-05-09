@@ -100,4 +100,16 @@ export class ClassTeacher {
       })
       .then((res) => res.data);
   }
+
+  static getСalculatedInfo(firstDate, secondDate, group) {
+    let dateFrom = format(new Date(firstDate), "yyyy-MM-dd");
+    let dateTo = format(new Date(secondDate), "yyyy-MM-dd");
+    return axios
+      .post("classroomTeacher/selectСalculatedInfo.php", {
+        dateFrom: dateFrom,
+        dateTo: dateTo,
+        group: group,
+      })
+      .then((res) => res.data);
+  }
 }
