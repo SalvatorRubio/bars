@@ -1,12 +1,12 @@
 import React from "react";
 import Popover from "@mui/material/Popover";
 import Typography from "@mui/material/Typography";
+import { Box } from "@mui/material";
 
 const ShowLessonType = ({ anchorEl, handlePopoverClose, lessonTypeText }) => {
   const open = Boolean(anchorEl);
   return (
     <Popover
-      id="mouse-over-popover"
       sx={{
         pointerEvents: "none",
       }}
@@ -23,9 +23,18 @@ const ShowLessonType = ({ anchorEl, handlePopoverClose, lessonTypeText }) => {
       onClose={handlePopoverClose}
       disableRestoreFocus
     >
-      <Typography sx={{ p: 1, minWidth: "150px", textAlign: "center" }}>
-        {(lessonTypeText.length > 0 && lessonTypeText[0].lesson_type) ||
-          "Тип урока не задан"}
+      <Typography
+        component="h6"
+        sx={{ p: 1, minWidth: "150px", textAlign: "center" }}
+      >
+        {lessonTypeText.map((item) => {
+          return (
+            <Box key={item.shedule_id} display="flex" flexDirection="column">
+              {item.lesson_type}
+              {item.topic ? ` - ${item.topic}` : ""}
+            </Box>
+          );
+        })}
       </Typography>
     </Popover>
   );

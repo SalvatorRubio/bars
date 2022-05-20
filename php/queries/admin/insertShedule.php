@@ -6,4 +6,4 @@ require_once $_SERVER['DOCUMENT_ROOT'].'/php/classes/Admin.php';
 
 $data = json_decode(file_get_contents('php://input'), true);
 
-print json_encode($admin->insert('insertShedule', $data['string']));
+$admin->insert('insertShedule',$data['string']);

@@ -49,6 +49,7 @@ const DisciplineAccord = ({ handleChange, expanded }) => {
               primary="Создать доп. дисциплину"
             />
           </ListItemButton>
+
           <ListItemButton onClick={() => navigate("/admin/edit-discipline")}>
             <ListItemIcon>
               <AddRoadIcon sx={{ color: "black" }} />

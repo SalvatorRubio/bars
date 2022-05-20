@@ -5,7 +5,9 @@ import Backdrop from "@mui/material/Backdrop";
 import Modal from "@mui/material/Modal";
 import Fade from "@mui/material/Fade";
 import Typography from "@mui/material/Typography";
-import { useAuth } from "../../../hook/useAuth";
+import { useAuth } from "../../../../hook/useAuth";
+import { useNavigate } from "react-router-dom";
+import { ClassApi } from "../../../../ClassesApi/ClassApi";
 
 const style = {
   position: "absolute",
@@ -19,27 +21,59 @@ const style = {
 };
 
 const Settings = () => {
-  const { user } = useAuth();
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const { user, singout, role, id } = useAuth();
+  const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = useState(null);
+  const [oldPassword, setOldPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [error, setError] = useState(false);
+  const [isValid, setValid] = useState(false);
   const open1 = Boolean(anchorEl);
+
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => {
+    setOpen(true);
+    setAnchorEl(null);
+  };
+  const handleClose = () => {
+    setOpen(false);
+    setValid(false);
+  };
   const handleClick = (event) => {
     setAnchorEl(event.target);
   };
-  const handleClose1 = () => {
+  const closeSetting = () => {
     setAnchorEl(null);
-    setOpen(true);
+    setValid(false);
+  };
+
+  const handleExit = () => {
+    singout(() => navigate("/"));
+    sessionStorage.clear();
+  };
+  const updatePassword = () => {
+    if (oldPassword && newPassword) {
+      ClassApi.updatePassword(role, newPassword, id, oldPassword).then(
+        (res) => {
+          if (res.length > 0) {
+            setError(true);
+          } else {
+            setNewPassword("");
+            setOldPassword("");
+            setValid(true);
+            setError(false);
+          }
+        }
+      );
+    } else {
+      setError(true);
+    }
   };
 
   return (
     <Box>
       <Button
         startIcon={<KeyboardArrowDownIcon />}
-        id="basic-button"
-        aria-controls="basic-menu"
-        aria-haspopup="true"
         aria-expanded={open1 ? "true" : undefined}
         color="inherit"
         onClick={handleClick}
@@ -49,22 +83,19 @@ const Settings = () => {
         {user}
       </Button>
       <Menu
-        id="basic-menu"
         anchorEl={anchorEl}
         open={open1}
-        onClose={handleClose1}
+        onClose={closeSetting}
         MenuListProps={{
           "aria-labelledby": "basic-button",
         }}
       >
-        <MenuItem onClick={handleClose1}>Изменить пароль</MenuItem>
+        <MenuItem onClick={handleOpen}>Изменить пароль</MenuItem>
       </Menu>
-      <Button variant="text" color="inherit">
+      <Button onClick={handleExit} variant="text" color="inherit">
         Выход
       </Button>
       <Modal
-        aria-labelledby="transition-modal-title"
-        aria-describedby="transition-modal-description"
         open={open}
         onClose={handleClose}
         closeAfterTransition
@@ -87,6 +118,8 @@ const Settings = () => {
               <TextField
                 id="outlined-basic"
                 label="Старый пароль"
+                value={oldPassword}
+                onChange={(e) => setOldPassword(e.target.value)}
                 variant="outlined"
               />
             </Box>
@@ -102,11 +135,31 @@ const Settings = () => {
               <TextField
                 id="outlined-basic"
                 label="Новый пароль"
+                value={newPassword}
+                onChange={(e) => setNewPassword(e.target.value)}
                 variant="outlined"
               />
             </Box>
+            {error && (
+              <Box display="flex" justifyContent="center">
+                <Typography variant="p" color="red" align="center">
+                  Неверно введены данные
+                </Typography>
+              </Box>
+            )}
+            {isValid && (
+              <Box display="flex" justifyContent="center">
+                <Typography variant="p" color="green" align="center">
+                  Пароль успешно обновлен!
+                </Typography>
+              </Box>
+            )}
             <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
-              <Button sx={{ m: "10px 10px" }} variant="contained">
+              <Button
+                onClick={updatePassword}
+                sx={{ m: "10px 10px" }}
+                variant="contained"
+              >
                 Изменить пароль
               </Button>
               <Button

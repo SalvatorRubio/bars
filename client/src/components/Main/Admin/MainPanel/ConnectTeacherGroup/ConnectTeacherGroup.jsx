@@ -12,7 +12,6 @@ const ConnectTeacherGroup = () => {
   const [teacher, setTeacher] = useState("");
   const [discipline, setDiscipline] = useState("");
   const [course, setCourse] = useState("");
-  const [isCorrect, setCorrect] = useState(false);
   const [semester, setSemester] = useState("");
 
   const handleClick = () => {
@@ -23,10 +22,6 @@ const ConnectTeacherGroup = () => {
       course,
       semester
     ).then(() => {
-      setCorrect(true);
-      setTimeout(() => {
-        setCorrect(false);
-      }, 3000);
       setGroup("");
       setTeacher("");
       setDiscipline("");
@@ -54,16 +49,6 @@ const ConnectTeacherGroup = () => {
         value={semester}
         setValue={setSemester}
       />
-      <Typography
-        sx={{
-          height: "20px",
-          width: "100%",
-          textAlign: "center",
-          color: "#028A0F",
-        }}
-      >
-        {isCorrect ? "Учитель добавлен к группе" : ""}
-      </Typography>
       <Box
         sx={{
           width: "100%",

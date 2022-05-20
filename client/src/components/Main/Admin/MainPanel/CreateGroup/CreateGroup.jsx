@@ -1,79 +1,49 @@
-import { Box, Typography } from "@mui/material";
-import React, { useState } from "react";
+import { Typography } from "@mui/material";
+import React from "react";
 import { AdminApi } from "../../../../../ClassesApi/AdminApi";
 import FormButton from "./FormButton/FormButton";
 import InputForm from "./InputForm/InputForm";
 import SelectClassroomTeacher from "./SelectClassroomTeacher/SelectClassroomTeacher";
 import SelectSpeciality from "./SelectSpeciality/SelectSpeciality";
-import SemesterInput from "./SemesterInput/SemesterInput";
 import YearPicker from "./YearPicker/YearPicker";
+import { useForm, FormProvider } from "react-hook-form";
 
 const CreateGroup = () => {
-  const [speciality, setSpeciality] = useState("");
-  const [year, setYear] = useState(new Date());
-  const [teacher, setTeacher] = useState("");
+  const methods = useForm({
+    defaultValues: {
+      year: new Date(),
+      speciality: "",
+      numGroup: "",
+      course: "",
+      teacher: "",
+      semester: "",
+    },
+  });
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const target = e.target;
-    const { numGroup, course, startSemester, endSemester } = target;
-    AdminApi.insertGroup(
-      year,
-      speciality,
-      numGroup.value,
-      course.value,
-      teacher,
-      startSemester.value,
-      endSemester.value
-    ).then(() => {
-      setSpeciality("");
-      setYear("");
-      setTeacher("");
-      startSemester.value = "";
-      endSemester.value = "";
-      numGroup.value = "";
-      course.value = "";
-    });
+  const createGroup = (data) => {
+    const { year, speciality, numGroup, course, teacher, semester } = data;
+    AdminApi.insertGroup(year, speciality, numGroup, course, teacher, semester);
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <Typography
-        variant="h6"
-        sx={{ width: "100%", mb: 2, textAlign: "center" }}
-      >
-        Создание группы
-      </Typography>
-      <YearPicker year={year} setYear={setYear} />
-      <SelectSpeciality setSpeciality={setSpeciality} speciality={speciality} />
-      <InputForm label="Номер группы" name="numGroup" text="номер группы" />
-      <InputForm label="Курс" name="course" text="курс" />
-      <SelectClassroomTeacher teacher={teacher} setTeacher={setTeacher} />
-      <Box
-        sx={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "flex-start",
-          m: "5px 0",
-        }}
-      >
-        <SemesterInput
-          label="Семестр"
-          width="250px"
-          name="startSemester"
-          textAlign="left"
-          text="Начало семестра"
-        />
-        <SemesterInput
-          label="Семестр"
-          width="200px"
-          name="endSemester"
-          textAlign="center"
-          text="Конец семестра"
-        />
-      </Box>
-      <FormButton />
-    </form>
+    <FormProvider {...methods}>
+      <form onSubmit={methods.handleSubmit(createGroup)}>
+        <Typography
+          variant="h6"
+          sx={{ width: "100%", mb: 2, textAlign: "center" }}
+        >
+          Создание группы
+        </Typography>
+        <YearPicker />
+        <SelectSpeciality />
+        <InputForm label="Номер группы" name="numGroup" text="номер группы" />
+        <InputForm label="Курс" name="course" text="курс" />
+        <SelectClassroomTeacher />
+
+        <InputForm label="Семестр" name="semester" text="семестр" />
+        <FormButton />
+      </form>
+    </FormProvider>
   );
 };
 

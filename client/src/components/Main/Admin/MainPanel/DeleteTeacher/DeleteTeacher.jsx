@@ -16,7 +16,6 @@ const DeleteTeacher = () => {
   useEffect(() => {
     AdminApi.getTeachers().then((res) => setTeachersArr(res));
   }, []);
-
   const handleOpen = () => {
     if (teacher) setOpen(true);
   };
@@ -43,7 +42,10 @@ const DeleteTeacher = () => {
             {teachersArr.map((item) => {
               return (
                 <MenuItem key={item.teacher_id} value={item.teacher_id}>
-                  {item.surname} {item.name} {item.father_name}
+                  {item.surname} {item.name} {item.father_name}{" "}
+                  {Number(item.type) === 0
+                    ? "Преподователь"
+                    : "Кл. руководитель"}
                 </MenuItem>
               );
             })}

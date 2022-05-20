@@ -60,7 +60,8 @@ export class AdminApi {
     email,
     phone,
     login,
-    pass
+    pass,
+    type
   ) {
     const arr = [
       `"${firstName}"`,
@@ -71,6 +72,7 @@ export class AdminApi {
       `"${phone}"`,
       `"${login}"`,
       `"${pass}"`,
+      `"${type}"`,
     ];
 
     return axios
@@ -132,6 +134,15 @@ export class AdminApi {
       .then((res) => res.data);
   }
 
+  static watchTheShedule(discipline, group) {
+    return axios
+      .post("admin/watchTheShedule.php", {
+        discipline: discipline,
+        group: group,
+      })
+      .then((res) => res.data);
+  }
+
   static getKickedStudents() {
     return axios.get("admin/selectKickedStudents.php").then((res) => res.data);
   }
@@ -166,7 +177,7 @@ export class AdminApi {
     return axios.get("admin/selectSpeciality.php").then((res) => res.data);
   }
 
-  static insertGroup(year, spec, number, course, teacher, semStart, semEnd) {
+  static insertGroup(year, spec, number, course, teacher, semester) {
     const date = new Date(year).getFullYear();
     const arr = [
       `"${date}"`,
@@ -174,8 +185,7 @@ export class AdminApi {
       `"${number}"`,
       `"${course}"`,
       `"${teacher}"`,
-      `"${semStart}"`,
-      `"${semEnd}"`,
+      `"${semester}"`,
     ];
     return axios
       .post("admin/insertGroup.php", {
@@ -184,15 +194,12 @@ export class AdminApi {
       .then((res) => res.data);
   }
 
-  static updateGroup(teacher, group, semStart, semEnd, num, course) {
+  static updateGroup(teacher, group, num) {
     return axios
       .post("admin/updateGroup.php", {
         teacher: teacher,
         group: group,
-        startSem: semStart,
-        endSem: semEnd,
         num: num,
-        course: course,
       })
       .then((res) => res.data);
   }
@@ -224,27 +231,29 @@ export class AdminApi {
   }
 
   static insertAcademicPlan(semester, speciality, obj) {
-    return obj.map((item) => {
-      const arr = [
-        `"${item.name}"`,
-        `"${speciality}"`,
-        `"${item.hours}"`,
-        `"${semester}"`,
-        `"${semester}"`,
-        `"${item.lections}"`,
-        `"${item.practice}"`,
-        `"${item.labWork}"`,
-        `"${item.exam}"`,
-        `"${item.offset}"`,
-        `"${item.homework}"`,
-        `"${item.courseWork}"`,
-      ];
+    // eslint-disable-next-line array-callback-return
+    obj.map((item) => {
+      if (item.name) {
+        const arr = [
+          `"${item.name}"`,
+          `"${speciality}"`,
+          `"${item.hours}"`,
+          `"${semester}"`,
+          `"${item.lections}"`,
+          `"${item.practice}"`,
+          `"${item.labWork}"`,
+          `"${item.exam}"`,
+          `"${item.offset}"`,
+          `"${item.homework}"`,
+          `"${item.courseWork}"`,
+        ];
 
-      return axios
-        .post("admin/insertDiscipline.php", {
-          string: arr.join(),
-        })
-        .then((res) => res.data);
+        return axios
+          .post("admin/insertDiscipline.php", {
+            string: arr.join(),
+          })
+          .then((res) => res.data);
+      }
     });
   }
 
@@ -265,7 +274,6 @@ export class AdminApi {
       `"${discip}"`,
       `"${spec}"`,
       `"${hours}"`,
-      `"${semester}"`,
       `"${semester}"`,
       `"${lections}"`,
       `"${practice}"`,
@@ -347,7 +355,7 @@ export class AdminApi {
       lections,
       offset,
       practice,
-      semester_begin,
+      semester,
     } = arr[0];
 
     return axios
@@ -362,8 +370,20 @@ export class AdminApi {
         lections,
         offset,
         practice,
-        semester_begin,
+        semester,
       })
       .then((res) => res.data);
+  }
+
+  static deleteGroup(group) {
+    return axios
+      .post("admin/deleteGroup.php", {
+        group,
+      })
+      .then((res) => res.data);
+  }
+
+  static updateSemester() {
+    return axios.get("admin/updateSemester.php");
   }
 }

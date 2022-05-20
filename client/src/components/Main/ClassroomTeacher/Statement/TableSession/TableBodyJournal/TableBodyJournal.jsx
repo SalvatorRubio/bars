@@ -83,8 +83,9 @@ const TableBodyJournal = ({ group, disciplines, statement }) => {
       {state.map((item, i) => {
         return (
           <TableRow
+            hover
             sx={{
-              background: i % 2 !== 0 ? "rgba(240, 240, 240, 0.5)" : "#fff",
+              background: i % 2 !== 0 ? "rgba(240, 240, 240, 0.4)" : "#fff",
             }}
             key={item.id}
           >
@@ -96,14 +97,7 @@ const TableBodyJournal = ({ group, disciplines, statement }) => {
                 return item.disciplines.map((it, index) => {
                   if (it.name === el.name) {
                     return (
-                      <TableCell
-                        key={index}
-                        sx={{
-                          background:
-                            idx % 2 !== 0 ? "rgba(240, 240, 240, 0.5)" : "",
-                        }}
-                        className={classes.tableCell}
-                      >
+                      <TableCell key={index} className={classes.tableCell}>
                         {Number(it.mark) > 2
                           ? Number(it.mark).toFixed(2)
                           : "2.00"}
@@ -114,10 +108,6 @@ const TableBodyJournal = ({ group, disciplines, statement }) => {
               } else {
                 return (
                   <TableCell
-                    sx={{
-                      background:
-                        idx % 2 !== 0 ? "rgba(240, 240, 240, 0.5)" : "",
-                    }}
                     key={idx}
                     className={classes.tableCell}
                   ></TableCell>
@@ -127,7 +117,12 @@ const TableBodyJournal = ({ group, disciplines, statement }) => {
           </TableRow>
         );
       })}
-
+      <TableRow>
+        <TableCell></TableCell>
+        {disciplines.map((item, i) => {
+          return <TableCell key={i}></TableCell>;
+        })}
+      </TableRow>
       <QualityRowBody disciplines={disciplines} group={group} />
       <AbsoluteRowBody disciplines={disciplines} group={group} />
     </TableBody>

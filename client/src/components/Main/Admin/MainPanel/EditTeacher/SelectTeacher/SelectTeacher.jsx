@@ -20,7 +20,7 @@ const SelectTeacher = ({ teacher, setTeacher }) => {
         Выберите преподавателя
       </Typography>
       <FormControl fullWidth>
-        <InputLabel id="demo-simple-select-label">Преподаватель</InputLabel>
+        <InputLabel>Преподаватель</InputLabel>
         <Select
           value={teacher}
           label="Преподаватель"
@@ -31,7 +31,8 @@ const SelectTeacher = ({ teacher, setTeacher }) => {
           {teachersArr.map((item) => {
             return (
               <MenuItem key={item.teacher_id} value={item.teacher_id}>
-                {item.surname} {item.name} {item.father_name}
+                {item.surname} {item.name} {item.father_name}{" "}
+                {Number(item.type) === 0 ? "Преподователь" : "Кл. руководитель"}
               </MenuItem>
             );
           })}

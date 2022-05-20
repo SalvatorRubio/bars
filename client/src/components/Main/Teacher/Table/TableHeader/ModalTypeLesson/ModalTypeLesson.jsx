@@ -30,8 +30,6 @@ const ModalTypeLesson = ({ open, setOpen, shedule, columnsDate, date }) => {
 
   return (
     <Modal
-      aria-labelledby="transition-modal-title"
-      aria-describedby="transition-modal-description"
       open={open}
       onClose={handleClose}
       closeAfterTransition

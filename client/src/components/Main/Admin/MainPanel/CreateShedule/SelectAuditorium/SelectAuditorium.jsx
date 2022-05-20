@@ -4,10 +4,15 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
-import { Typography } from "@mui/material";
+import { FormHelperText, Typography } from "@mui/material";
 import { AdminApi } from "../../../../../../ClassesApi/AdminApi";
+import { Controller, useFormContext } from "react-hook-form";
 
-const SelectAuditorium = ({ value, setValue }) => {
+const SelectAuditorium = () => {
+  const {
+    control,
+    formState: { errors },
+  } = useFormContext();
   const [auditoriumsArr, setAuditoriumsArr] = useState([]);
   useEffect(() => {
     AdminApi.getAuditorium().then((res) => setAuditoriumsArr(res));
@@ -17,22 +22,28 @@ const SelectAuditorium = ({ value, setValue }) => {
       <Typography sx={{ width: "100%", maxWidth: "250px" }} variant="p">
         Выберите аудиторию
       </Typography>
-      <FormControl fullWidth>
-        <InputLabel>Аудитория</InputLabel>
-        <Select
-          value={value}
-          label="Аудитория"
-          onChange={(e) => setValue(e.target.value)}
-        >
-          {auditoriumsArr.map((item) => {
-            return (
-              <MenuItem key={item.id_auditorium} value={item.id_auditorium}>
-                {item.number}
-              </MenuItem>
-            );
-          })}
-        </Select>
-      </FormControl>
+      <Controller
+        rules={{ required: true }}
+        name="auditorium"
+        control={control}
+        render={({ field: { onChange, value } }) => (
+          <FormControl fullWidth error={!!errors.auditorium}>
+            <InputLabel>Аудитория</InputLabel>
+            <Select value={value} label="Аудитория" onChange={onChange}>
+              {auditoriumsArr.map((item) => {
+                return (
+                  <MenuItem key={item.id_auditorium} value={item.id_auditorium}>
+                    {item.number}
+                  </MenuItem>
+                );
+              })}
+            </Select>
+            {errors.auditorium && (
+              <FormHelperText>Выберите аудиторию</FormHelperText>
+            )}
+          </FormControl>
+        )}
+      />
     </Box>
   );
 };

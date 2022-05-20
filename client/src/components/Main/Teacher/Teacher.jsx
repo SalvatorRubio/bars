@@ -21,9 +21,8 @@ const useStyles = makeStyles({
     overflowY: "hidden",
   },
 });
-const date = new Date();
-const firstDate = new Date(date.setDate(date.getDate() - 14));
-const lastDate = new Date();
+const firstDate = new Date(new Date().setDate(new Date().getDate() - 14));
+const lastDate = new Date(new Date().setDate(new Date().getDate() + 1));
 
 const Teacher = () => {
   const classes = useStyles();

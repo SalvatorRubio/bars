@@ -80,7 +80,10 @@ const TableBodyStudent = ({ dates }) => {
             {middleMarks.map((el) => {
               if (el.name === item.name) {
                 return (
-                  <TableCell key={el.name}>
+                  <TableCell
+                    sx={{ borderLeft: "1px solid #ccc" }}
+                    key={el.name}
+                  >
                     {Number(el.mark) !== 0 ? Number(el.mark).toFixed(2) : 2}
                   </TableCell>
                 );

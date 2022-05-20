@@ -1,7 +1,12 @@
 import React from "react";
 import { Box, TextField, Typography } from "@mui/material";
+import { useFormContext, Controller } from "react-hook-form";
 
-const HoursInput = ({ text, value, setValue }) => {
+const HoursInput = ({ text, name }) => {
+  const {
+    control,
+    formState: { errors },
+  } = useFormContext();
   return (
     <Box
       sx={{
@@ -16,14 +21,21 @@ const HoursInput = ({ text, value, setValue }) => {
       >
         {text}
       </Typography>
-      <TextField
-        value={value}
-        onChange={(e) => setValue(e.target.value)}
-        InputProps={{ inputProps: { min: 0, max: 150 } }}
-        type="number"
-        sx={{ width: "150px" }}
-        label="Часы"
-        variant="outlined"
+      <Controller
+        control={control}
+        name={name}
+        rules={{ required: true }}
+        render={({ field: { onChange, value } }) => (
+          <TextField
+            error={!!errors[name]}
+            value={value}
+            onChange={onChange}
+            InputProps={{ inputProps: { min: 0, max: 150 } }}
+            type="number"
+            sx={{ width: "150px" }}
+            label="Часы"
+          />
+        )}
       />
     </Box>
   );

@@ -6,9 +6,15 @@ import {
   InputLabel,
   Select,
   MenuItem,
+  FormHelperText,
 } from "@mui/material";
+import { Controller, useFormContext } from "react-hook-form";
 
-const TypeLesson = ({ setTypeLesson, typeLesson }) => {
+const TypeLesson = () => {
+  const {
+    control,
+    formState: { errors },
+  } = useFormContext();
   const types = [
     {
       value: "Зачет",
@@ -48,24 +54,28 @@ const TypeLesson = ({ setTypeLesson, typeLesson }) => {
       <Typography sx={{ width: "100%", maxWidth: "250px" }} variant="p">
         Выберите тип урока
       </Typography>
-      <FormControl fullWidth>
-        <InputLabel id="demo-simple-select-label">Тип урока</InputLabel>
-        <Select
-          labelId="demo-simple-select-label"
-          id="demo-simple-select"
-          value={typeLesson}
-          label="Тип урока"
-          onChange={(e) => setTypeLesson(e.target.value)}
-        >
-          {types.map((item) => {
-            return (
-              <MenuItem key={item.value} value={item.value}>
-                {item.name}
-              </MenuItem>
-            );
-          })}
-        </Select>
-      </FormControl>
+      <Controller
+        rules={{ required: true }}
+        name="typeLesson"
+        control={control}
+        render={({ field: { onChange, value } }) => (
+          <FormControl fullWidth error={!!errors.typeLesson}>
+            <InputLabel>Тип урока</InputLabel>
+            <Select value={value} label="Тип урока" onChange={onChange}>
+              {types.map((item) => {
+                return (
+                  <MenuItem key={item.value} value={item.value}>
+                    {item.name}
+                  </MenuItem>
+                );
+              })}
+            </Select>
+            {errors.typeLesson && (
+              <FormHelperText>Выберите тип урока</FormHelperText>
+            )}
+          </FormControl>
+        )}
+      />
     </Box>
   );
 };

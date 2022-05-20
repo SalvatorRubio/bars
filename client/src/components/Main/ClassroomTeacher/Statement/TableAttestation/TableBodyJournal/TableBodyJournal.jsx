@@ -54,7 +54,7 @@ function reducer(state, action) {
   }
 }
 
-const TableBodyJournal = ({ group, disciplines, dates, statement }) => {
+const TableBodyJournal = ({ group, disciplines, dates }) => {
   const [state, dispatch] = useReducer(reducer, []);
   const classes = useStyles();
 
@@ -85,8 +85,9 @@ const TableBodyJournal = ({ group, disciplines, dates, statement }) => {
       {state.map((item, i) => {
         return (
           <TableRow
+            hover
             sx={{
-              background: i % 2 !== 0 ? "rgba(240, 240, 240, 0.5)" : "#fff",
+              background: i % 2 !== 0 ? "rgba(240, 240, 240, 0.4)" : "#fff",
             }}
             key={item.id}
           >
@@ -98,14 +99,7 @@ const TableBodyJournal = ({ group, disciplines, dates, statement }) => {
                 return item.disciplines.map((it, index) => {
                   if (it.name === el.name) {
                     return (
-                      <TableCell
-                        key={index}
-                        sx={{
-                          background:
-                            idx % 2 !== 0 ? "rgba(240, 240, 240, 0.5)" : "",
-                        }}
-                        className={classes.tableCell}
-                      >
+                      <TableCell key={index} className={classes.tableCell}>
                         {Number(it.mark) > 2
                           ? Number(it.mark).toFixed(2)
                           : "2.00"}
@@ -116,10 +110,6 @@ const TableBodyJournal = ({ group, disciplines, dates, statement }) => {
               } else {
                 return (
                   <TableCell
-                    sx={{
-                      background:
-                        idx % 2 !== 0 ? "rgba(240, 240, 240, 0.5)" : "",
-                    }}
                     key={idx}
                     className={classes.tableCell}
                   ></TableCell>
@@ -129,7 +119,12 @@ const TableBodyJournal = ({ group, disciplines, dates, statement }) => {
           </TableRow>
         );
       })}
-
+      <TableRow>
+        <TableCell></TableCell>
+        {disciplines.map((item, i) => {
+          return <TableCell key={i}></TableCell>;
+        })}
+      </TableRow>
       <QualityRowBody disciplines={disciplines} dates={dates} group={group} />
       <AbsoluteRowBody disciplines={disciplines} dates={dates} group={group} />
     </TableBody>

@@ -13,23 +13,21 @@ class ClassroomTeacher extends User {
     return $query;
   }
 
-  public function selectKnowledgeForAttestation($procedure, $start_date, $end_date, $discipline, $group)
+  public function selectKnowledgeForAttestation($procedure, $start_date, $end_date, $group)
   {
-    $stmt = $this->dbh->prepare('CALL '.$procedure.'(?,?,?,?)');
+    $stmt = $this->dbh->prepare('CALL '.$procedure.'(?,?,?)');
     $stmt->bindParam(1, $start_date, PDO::PARAM_STR, 4000);
     $stmt->bindParam(2, $end_date, PDO::PARAM_INT, 4000);
-    $stmt->bindParam(3, $discipline, PDO::PARAM_INT, 4000);
-    $stmt->bindParam(4, $group, PDO::PARAM_INT, 4000);
+    $stmt->bindParam(3, $group, PDO::PARAM_INT, 4000);
     $stmt->execute();
     $query = $stmt->fetchAll(PDO::FETCH_ASSOC);
     return $query;
   }
 
-  public function selectKnowledgeForSession($procedure, $discipline, $group)
+  public function selectKnowledgeForSession($procedure,  $group)
   {
-    $stmt = $this->dbh->prepare('CALL '.$procedure.'(?,?)');
-    $stmt->bindParam(1, $discipline, PDO::PARAM_INT, 4000);
-    $stmt->bindParam(2, $group, PDO::PARAM_INT, 4000);
+    $stmt = $this->dbh->prepare('CALL '.$procedure.'(?)');
+    $stmt->bindParam(1, $group, PDO::PARAM_INT, 4000);
     $stmt->execute();
     $query = $stmt->fetchAll(PDO::FETCH_ASSOC);
     return $query;

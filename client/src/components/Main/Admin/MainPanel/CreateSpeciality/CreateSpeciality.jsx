@@ -1,78 +1,74 @@
 import { Box, Button, Typography } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import { AdminApi } from "../../../../../ClassesApi/AdminApi";
 import FormInput from "./FormInput/FormInput";
+import { useForm, FormProvider } from "react-hook-form";
 
 const CreateSpeciality = () => {
-  const [nameGroup, setNameGroup] = useState("");
-  const [fullNameGroup, setFullNameGroup] = useState("");
-  const [codeGroup, setCodeGroup] = useState("");
-  const [courses, setCourses] = useState("");
+  const methods = useForm({
+    defaultValues: {
+      nameGroup: "",
+      fullNameGroup: "",
+      codeGroup: "",
+      courses: "",
+    },
+  });
 
-  const handleClick = () => {
-    AdminApi.insertSpeciality(
-      nameGroup,
-      fullNameGroup,
-      codeGroup,
-      courses
-    ).then(() => {
-      setNameGroup("");
-      setFullNameGroup("");
-      setCodeGroup("");
-      setCourses("");
-    });
+  const createSpeciality = (data) => {
+    const { nameGroup, fullNameGroup, codeGroup, courses } = data;
+    AdminApi.insertSpeciality(nameGroup, fullNameGroup, codeGroup, courses);
   };
 
-  return (
-    <Box>
-      <Typography
-        variant="h6"
-        sx={{ width: "100%", mb: 2, textAlign: "center" }}
-      >
-        Создание специальности
-      </Typography>
-      <FormInput
-        setValue={setNameGroup}
-        value={nameGroup}
-        label="Название"
-        type="text"
-        text="короткое название группы"
-      />
-      <FormInput
-        setValue={setFullNameGroup}
-        value={fullNameGroup}
-        label="Название"
-        type="text"
-        text="полное название группы"
-      />
-      <FormInput
-        setValue={setCodeGroup}
-        value={codeGroup}
-        label="Код"
-        type="text"
-        text="код группы"
-      />
-      <FormInput
-        setValue={setCourses}
-        value={courses}
-        label="Курсы"
-        type="number"
-        text="количество курсов"
-      />
+  useEffect(() => {
+    if (methods.formState.isSubmitSuccessful) {
+      methods.reset();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [methods.formState]);
 
-      <Box
-        sx={{
-          width: "100%",
-          display: "flex",
-          justifyContent: "flex-end",
-          mt: "20px",
-        }}
-      >
-        <Button onClick={handleClick} variant="contained">
-          Создать специальность
-        </Button>
-      </Box>
-    </Box>
+  return (
+    <FormProvider {...methods}>
+      <form onSubmit={methods.handleSubmit(createSpeciality)}>
+        <Box>
+          <Typography
+            variant="h6"
+            sx={{ width: "100%", mb: 2, textAlign: "center" }}
+          >
+            Создание специальности
+          </Typography>
+          <FormInput
+            name="nameGroup"
+            label="Название"
+            text="короткое название группы"
+          />
+          <FormInput
+            name="fullNameGroup"
+            label="Название"
+            text="полное название группы"
+          />
+          <FormInput name="codeGroup" label="Код" text="код группы" />
+          <FormInput
+            name="courses"
+            label="Курсы"
+            type="number"
+            text="количество курсов"
+          />
+
+          <Box
+            sx={{
+              width: "100%",
+              display: "flex",
+              justifyContent: "flex-end",
+              mt: "20px",
+            }}
+          >
+            <Button type="submit" variant="contained">
+              Создать специальность
+            </Button>
+          </Box>
+        </Box>
+      </form>
+    </FormProvider>
   );
 };
 

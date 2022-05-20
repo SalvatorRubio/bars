@@ -6,9 +6,8 @@ import { Routes, Route } from "react-router-dom";
 import TableAttestation from "./TableAttestation/TableAttestation";
 import TableSession from "./TableSession/TableSession";
 
-const date = new Date();
-const firstDate = new Date(date.setDate(date.getDate() - 14));
-const lastDate = new Date();
+const firstDate = new Date(new Date().setDate(new Date().getDate() - 14));
+const lastDate = new Date(new Date().setDate(new Date().getDate() + 1));
 
 const Statement = () => {
   const [dates, setDates] = useState([firstDate, lastDate]);

@@ -1,21 +1,18 @@
 <?php
 require_once $_SERVER['DOCUMENT_ROOT'].'/php/classes/User.php';
 class Admin extends User {
-  // СДЕЛАТЬ ПРОВЕРКУ НА КОЛИЧЕСТВО ЧАСОВ УРОКА, ЕСЛИ СУММА ЧАСОВ МЕНЬШЕ ОБЩЕГО КОЛИЧЕСТВА ТО УРОКИ НЕ ДОБАВЛЯЮТСЯ
-  // СДЕЛАТЬ УДАЛЕНИЕ ЧЕГО? УЧИТЕЛЕЙ, УЧЕНИКОВ(КОТОРЫЕ ВЫПУСТИЛИСЬ), ТРИГГЕРОМ УДАЛИТЬ ОЦЕНКИ И УРОКИ
-  // УЧИТЕЛЕЙ ОСТАВЛЯТЬ, ЕСЛИ УВОЛИЛИСЬ? НЕТ
-  // СДЕЛАТЬ МЕТОДЫ ОБНОВЛЕНИЯ КУРСА И ОТЧИСЛЕНИЯ СТУДЕНТА
-  // ПОМЕНЯТЬ ТИП КУРСА И НАЗВАНИЕ EDU_YEAR
-
-  //ВЫВОД УЧИТЕЛЕЙ, СТУДЕНТОВ и прочее.
-  // Нужно ли выводить учеников, если только для удаления или перевода?
-  // ИСПРАВИТЬ ДАТЫ ДЛЯ УЧИТЕЛЯ
   public function select($procedure)
   {
     $stmt = $this->dbh->prepare('CALL '.$procedure.'()');
     $stmt->execute();
     $query = $stmt->fetchAll(PDO::FETCH_ASSOC);
     return $query;
+  }
+
+  public function updateSemester()
+  {
+    $stmt = $this->dbh->prepare('CALL updateSemester()');
+    $stmt->execute();
   }
 
   public function selectOneTeacher($teacher) {
@@ -31,6 +28,14 @@ class Admin extends User {
   {
     $stmt = $this->dbh->prepare('CALL '.$procedure.'(?)');
     $stmt->bindParam(1, $string, PDO::PARAM_STR, 4000);
+    $stmt->execute();
+  }
+
+  public function watchTheShedule($discipline, $group)
+  {
+    $stmt = $this->dbh->prepare('CALL watchTheShedule(?,?)');
+    $stmt->bindParam(1, $discipline, PDO::PARAM_STR, 4000);
+    $stmt->bindParam(2, $group, PDO::PARAM_STR, 4000);
     $stmt->execute();
     $query = $stmt->fetchAll(PDO::FETCH_ASSOC);
     return $query;
@@ -93,24 +98,19 @@ class Admin extends User {
     $stmt->execute();
   }
 
-  public function updateGroup($group, $teacher, $start_sem, $end_sem, $num, $course) {
-    $stmt = $this->dbh->prepare('CALL updateGroup(?,?,?,?,?,?)');
+  public function updateGroup($group, $teacher, $num) {
+    $stmt = $this->dbh->prepare('CALL updateGroup(?,?,?)');
     $stmt->bindParam(1, $teacher, PDO::PARAM_INT, 4000);
     $stmt->bindParam(2, $group, PDO::PARAM_INT, 4000);
-    $stmt->bindParam(3, $start_sem, PDO::PARAM_INT, 4000);
-    $stmt->bindParam(4, $end_sem, PDO::PARAM_INT, 4000);
-    $stmt->bindParam(5, $num, PDO::PARAM_INT, 4000);
-    $stmt->bindParam(6, $course, PDO::PARAM_INT, 4000);
+    $stmt->bindParam(3, $num, PDO::PARAM_INT, 4000);
     $stmt->execute();
-    $query = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    return $query;
   }
 
-  public function updateDiscipline($id, $name, $start_sem, $lections, $practice, $lab_work, $exam, $offset, $homework, $course_work, $hours) {
+  public function updateDiscipline($id, $name, $semester, $lections, $practice, $lab_work, $exam, $offset, $homework, $course_work, $hours) {
     $stmt = $this->dbh->prepare('CALL updateDiscipline(?,?,?,?,?,?,?,?,?,?,?)');
     $stmt->bindParam(1, $id, PDO::PARAM_STR, 4000);
     $stmt->bindParam(2, $name, PDO::PARAM_STR, 4000);
-    $stmt->bindParam(3, $start_sem, PDO::PARAM_INT, 4000);
+    $stmt->bindParam(3, $semester, PDO::PARAM_INT, 4000);
     $stmt->bindParam(4, $lections, PDO::PARAM_INT, 4000);
     $stmt->bindParam(5, $practice, PDO::PARAM_INT, 4000);
     $stmt->bindParam(6, $lab_work, PDO::PARAM_INT, 4000);

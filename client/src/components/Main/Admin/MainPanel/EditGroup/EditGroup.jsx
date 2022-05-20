@@ -1,104 +1,60 @@
 import { Box, Typography, Button } from "@mui/material";
 import SelectGroup from "../SelectGroup/SelectGroup";
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import SelectTeacher from "./SelectTeacher/SelectTeacher";
-import SemesterInput from "./SemesterInput/SemesterInput";
+import FormInput from "./FormInput/FormInput";
 import { AdminApi } from "../../../../../ClassesApi/AdminApi";
+import { useForm, FormProvider } from "react-hook-form";
 
 const EditGroup = () => {
-  const [group, setGroup] = useState("");
-  const [teacher, setTeacher] = useState("");
-  const [startSem, setStartSem] = useState("");
-  const [endSem, setEndSem] = useState("");
-  const [number, setNumber] = useState("");
-  const [course, setCourse] = useState("");
+  const methods = useForm({
+    defaultValues: {
+      teacher: "",
+      group: "",
+      number: "",
+    },
+  });
 
-  const handleClick = () => {
-    AdminApi.updateGroup(teacher, group, startSem, endSem, number, course).then(
-      () => {
-        setGroup("");
-        setTeacher("");
-        setStartSem("");
-        setEndSem("");
-        setNumber("");
-        setCourse("");
-      }
-    );
+  const updateGroup = (data) => {
+    const { teacher, group, number } = data;
+    AdminApi.updateGroup(teacher, group, number);
   };
 
+  useEffect(() => {
+    if (methods.formState.isSubmitSuccessful) {
+      methods.reset();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [methods.formState]);
+
   return (
-    <Box sx={{ display: "flex", flexDirection: "column" }}>
-      <Typography
-        variant="h6"
-        sx={{ width: "100%", mb: 2, textAlign: "center" }}
-      >
-        Изменение группы
-      </Typography>
-      <SelectGroup group={group} setGroup={setGroup} />
-      <SelectTeacher teacher={teacher} setTeacher={setTeacher} />
-      <Box
-        sx={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "flex-start",
-          m: "5px 0",
-        }}
-      >
-        <SemesterInput
-          label="Семестр"
-          width="250px"
-          textAlign="left"
-          text="Начало семестра"
-          value={startSem}
-          setValue={setStartSem}
-        />
-        <SemesterInput
-          label="Семестр"
-          width="200px"
-          textAlign="center"
-          text="Конец семестра"
-          value={endSem}
-          setValue={setEndSem}
-        />
-      </Box>
-      <Box
-        sx={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "flex-start",
-          m: "5px 0",
-        }}
-      >
-        <SemesterInput
-          label="Номер группы"
-          width="250px"
-          textAlign="left"
-          text="Номер группы"
-          value={number}
-          setValue={setNumber}
-        />
-        <SemesterInput
-          label="Курс"
-          width="200px"
-          textAlign="center"
-          text="Курс"
-          value={course}
-          setValue={setCourse}
-        />
-      </Box>
-      <Box
-        sx={{
-          width: "100%",
-          display: "flex",
-          justifyContent: "flex-end",
-          mt: "20px",
-        }}
-      >
-        <Button onClick={handleClick} variant="contained">
-          Изменить группу
-        </Button>
-      </Box>
-    </Box>
+    <FormProvider {...methods}>
+      <form onSubmit={methods.handleSubmit(updateGroup)}>
+        <Box sx={{ display: "flex", flexDirection: "column" }}>
+          <Typography
+            variant="h6"
+            sx={{ width: "100%", mb: 2, textAlign: "center" }}
+          >
+            Изменение группы
+          </Typography>
+          <SelectGroup />
+          <SelectTeacher />
+          <FormInput />
+          <Box
+            sx={{
+              width: "100%",
+              display: "flex",
+              justifyContent: "flex-end",
+              mt: "20px",
+            }}
+          >
+            <Button type="submit" variant="contained">
+              Изменить группу
+            </Button>
+          </Box>
+        </Box>
+      </form>
+    </FormProvider>
   );
 };
 

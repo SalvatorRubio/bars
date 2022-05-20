@@ -1,6 +1,6 @@
 import { Box, Typography, Button } from "@mui/material";
 import React, { useState } from "react";
-import SelectGroup from "../SelectGroup/SelectGroup";
+import SelectGroup from "./SelectGroup/SelectGroup";
 import ModalDelete from "./ModalDelete/ModalDelete";
 
 const DeleteGroup = () => {
@@ -18,7 +18,6 @@ const DeleteGroup = () => {
       >
         Удалить группу
       </Typography>
-
       <SelectGroup group={group} setGroup={setGroup} />
       <Box
         sx={{

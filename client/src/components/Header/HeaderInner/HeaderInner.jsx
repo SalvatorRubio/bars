@@ -3,6 +3,7 @@ import MenuBookIcon from "@mui/icons-material/MenuBook";
 import { Box, Button } from "@mui/material";
 import Settings from "./Settings/Settings";
 import { makeStyles } from "@mui/styles";
+import { useAuth } from "../../../hook/useAuth";
 
 const useStyles = makeStyles({
   box: {
@@ -20,6 +21,7 @@ const useStyles = makeStyles({
 
 const HeaderInner = () => {
   const classes = useStyles();
+  const { role } = useAuth();
 
   return (
     <>
@@ -32,7 +34,7 @@ const HeaderInner = () => {
           Цифровой журнал
         </Button>
       </Box>
-      <Settings />
+      {role && <Settings />}
     </>
   );
 };

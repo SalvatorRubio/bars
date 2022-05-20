@@ -8,7 +8,7 @@ const MarkItem = ({ itemMark, i, student, handleChange }) => {
       id={`student_${student}${i}`}
       sx={{ cursor: "pointer" }}
       align="center"
-      onDoubleClick={(e) => handleChange(e, itemMark)}
+      onClick={(e) => handleChange(e, itemMark)}
     >
       {itemMark != 0 ? itemMark : ""}
     </TableCell>

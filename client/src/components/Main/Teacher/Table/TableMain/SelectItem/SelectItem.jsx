@@ -19,7 +19,6 @@ const SelectItem = ({ setIsEdit, student, shedule, setValue, value }) => {
           <MenuItem value="4">4</MenuItem>
           <MenuItem value="5">5</MenuItem>
           <MenuItem value="н">н</MenuItem>
-          <MenuItem value="Нб">Нб</MenuItem>
         </Select>
       </FormControl>
     </TableCell>

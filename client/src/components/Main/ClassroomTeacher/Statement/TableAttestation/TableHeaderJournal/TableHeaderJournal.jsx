@@ -24,13 +24,7 @@ const TableHeaderJournal = ({ disciplines }) => {
         </TableCell>
         {disciplines.map((item, idx) => {
           return (
-            <TableCell
-              sx={{
-                background: idx % 2 !== 0 ? "rgba(240, 240, 240, 0.5)" : "",
-              }}
-              key={item.discipline_id}
-              className={classes.tableCell}
-            >
+            <TableCell key={item.discipline_id} className={classes.tableCell}>
               {item.name}
             </TableCell>
           );

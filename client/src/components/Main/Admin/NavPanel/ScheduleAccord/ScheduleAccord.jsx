@@ -20,11 +20,7 @@ const ScheduleAccord = ({ handleChange, expanded }) => {
       expanded={expanded === "panel7"}
       onChange={handleChange("panel7")}
     >
-      <AccordionSummary
-        expandIcon={<ExpandMoreIcon />}
-        aria-controls="panel7bh-content"
-        id="panel7bh-header"
-      >
+      <AccordionSummary expandIcon={<ExpandMoreIcon />}>
         <CalendarTodayIcon />
         <Typography sx={{ pl: "10px", flexGrow: 1 }}>
           Расписание на день

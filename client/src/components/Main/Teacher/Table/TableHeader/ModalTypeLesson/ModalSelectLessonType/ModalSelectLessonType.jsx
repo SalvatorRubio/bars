@@ -28,7 +28,7 @@ const ModalSelectLessonType = ({ handleChange, lessonType }) => {
           onChange={handleChange}
         >
           <MenuItem value="Практическая работа">Практическая работа</MenuItem>
-          <MenuItem value="Теория">Теоретическая работа</MenuItem>
+          <MenuItem value="Теоретическая работа">Теоретическая работа</MenuItem>
           <MenuItem value="Практическая-теоретическая работа">
             Практическая-Теоретическая работа
           </MenuItem>

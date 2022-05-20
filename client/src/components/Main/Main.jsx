@@ -3,7 +3,6 @@ import Teacher from "./Teacher/Teacher";
 import Container from "@mui/material/Container";
 import { Box } from "@mui/material";
 import { useAuth } from "../../hook/useAuth";
-
 import { Route, Routes } from "react-router-dom";
 import RequireAuth from "../../hoc/RequireAuth";
 import Login from "../Login/Login";
@@ -19,23 +18,23 @@ const Main = () => {
         <Routes>
           <Route
             path="/admin/*"
-            element={<RequireAuth>{role === 1 && <Admin />}</RequireAuth>}
+            element={<RequireAuth>{role === "1" && <Admin />}</RequireAuth>}
           />
           <Route
             path="/teacher"
-            element={<RequireAuth>{role === 2 && <Teacher />}</RequireAuth>}
+            element={<RequireAuth>{role === "2" && <Teacher />}</RequireAuth>}
           />
           <Route
             path="/student"
-            element={<RequireAuth>{role === 3 && <Student />}</RequireAuth>}
+            element={<RequireAuth>{role === "3" && <Student />}</RequireAuth>}
           />
           <Route
             path="/classroom-teacher/*"
             element={
-              <RequireAuth>{role === 4 && <ClassroomTeacher />}</RequireAuth>
+              <RequireAuth>{role === "4" && <ClassroomTeacher />}</RequireAuth>
             }
           />
-          <Route path="/" element={<Login />} />
+          <Route path="/" element={!role && <Login />} />
         </Routes>
       </Container>
     </Box>

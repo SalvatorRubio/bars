@@ -11,46 +11,35 @@ const QualityRowBody = ({ disciplines, dates, group }) => {
   const [qualityKnowledge, setQualityKnowledge] = useState([]);
   const classes = useStyles();
   useEffect(() => {
-    let discipArr = [...disciplines];
-    let resArr = [];
-    disciplines.map((item) => {
-      return ClassTeacher.getQualityAttestationKnowledge(
-        dates[0],
-        dates[1],
-        item.discipline_id,
-        group
-      ).then((res) => {
-        if (res.length > 0) {
-          resArr = [...resArr, res[0]];
-        }
-        let arr = discipArr.map((item) => {
-          // eslint-disable-next-line array-callback-return
-          resArr.map((el) => {
-            if (item.name === el.name) {
-              item = { ...item, quality: el.quality };
-            }
-          });
-          return item;
-        });
-        setQualityKnowledge([...arr]);
-      });
+    return ClassTeacher.getQualityAttestationKnowledge(
+      dates[0],
+      dates[1],
+      group
+    ).then((res) => {
+      setQualityKnowledge(res);
     });
   }, [disciplines, dates, group]);
-
   return (
     <TableRow>
       <TableCell>Качество знаний</TableCell>
-      {qualityKnowledge.map((item) => {
-        // eslint-disable-next-line array-callback-return
-        return disciplines.map((discipline) => {
-          if (discipline.name === item.name) {
-            return (
-              <TableCell key={item.discipline_id} className={classes.tableCell}>
-                {item.quality ? Number(item.quality).toFixed(2) : ""}
-              </TableCell>
-            );
-          }
-        });
+      {disciplines.map((discipline, i) => {
+        if (qualityKnowledge.find((item) => discipline.name === item.name)) {
+          // eslint-disable-next-line array-callback-return
+          return qualityKnowledge.map((item) => {
+            if (discipline.name === item.name) {
+              return (
+                <TableCell
+                  key={item.discipline_id}
+                  className={classes.tableCell}
+                >
+                  {item.quality ? Number(item.quality).toFixed(2) : ""}
+                </TableCell>
+              );
+            }
+          });
+        } else {
+          return <TableCell key={i} className={classes.tableCell}></TableCell>;
+        }
       })}
     </TableRow>
   );

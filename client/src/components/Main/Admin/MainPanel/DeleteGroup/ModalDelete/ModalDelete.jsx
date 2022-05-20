@@ -1,4 +1,6 @@
 import { Box, Typography, Button, Modal, Backdrop, Fade } from "@mui/material";
+import { AdminApi } from "../../../../../../ClassesApi/AdminApi";
+
 import React from "react";
 const style = {
   position: "absolute",
@@ -11,7 +13,9 @@ const style = {
   p: 4,
 };
 const ModalDelete = ({ open, handleClose, group }) => {
-  const handleDelete = () => {};
+  const handleDelete = () => {
+    AdminApi.deleteGroup(group).then((res) => handleClose());
+  };
 
   return (
     <Modal

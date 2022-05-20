@@ -41,7 +41,7 @@ const AcademicTableBody = ({ disciplines, setDisciplines }) => {
               <TableCell>
                 <TextField
                   sx={{ width: "100px" }}
-                  value={item.hours ? item.hours : ""}
+                  value={item.hours}
                   type="number"
                   InputProps={{ inputProps: { min: 0, max: 150 } }}
                   onChange={(e) => handleChange(e, "hours", i)}
@@ -50,7 +50,7 @@ const AcademicTableBody = ({ disciplines, setDisciplines }) => {
               <TableCell>
                 <TextField
                   sx={{ width: "100px" }}
-                  value={item.lections ? item.lections : ""}
+                  value={item.lections}
                   type="number"
                   InputProps={{ inputProps: { min: 0, max: 150 } }}
                   onChange={(e) => handleChange(e, "lections", i)}
@@ -59,7 +59,7 @@ const AcademicTableBody = ({ disciplines, setDisciplines }) => {
               <TableCell>
                 <TextField
                   sx={{ width: "100px" }}
-                  value={item.practice ? item.practice : ""}
+                  value={item.practice}
                   type="number"
                   InputProps={{ inputProps: { min: 0, max: 150 } }}
                   onChange={(e) => handleChange(e, "practice", i)}
@@ -68,7 +68,7 @@ const AcademicTableBody = ({ disciplines, setDisciplines }) => {
               <TableCell>
                 <TextField
                   sx={{ width: "100px" }}
-                  value={item.labWork ? item.labWork : ""}
+                  value={item.labWork}
                   type="number"
                   InputProps={{ inputProps: { min: 0, max: 150 } }}
                   onChange={(e) => handleChange(e, "labWork", i)}
@@ -77,7 +77,7 @@ const AcademicTableBody = ({ disciplines, setDisciplines }) => {
               <TableCell>
                 <TextField
                   sx={{ width: "100px" }}
-                  value={item.homework ? item.homework : ""}
+                  value={item.homework}
                   type="number"
                   InputProps={{ inputProps: { min: 0, max: 150 } }}
                   onChange={(e) => handleChange(e, "homework", i)}
@@ -86,7 +86,7 @@ const AcademicTableBody = ({ disciplines, setDisciplines }) => {
               <TableCell>
                 <TextField
                   sx={{ width: "100px" }}
-                  value={item.courseWork ? item.courseWork : ""}
+                  value={item.courseWork}
                   type="number"
                   InputProps={{ inputProps: { min: 0, max: 150 } }}
                   onChange={(e) => handleChange(e, "courseWork", i)}
@@ -95,7 +95,7 @@ const AcademicTableBody = ({ disciplines, setDisciplines }) => {
               <TableCell>
                 <TextField
                   sx={{ width: "100px" }}
-                  value={item.offset ? item.offset : ""}
+                  value={item.offset}
                   type="number"
                   InputProps={{ inputProps: { min: 0, max: 150 } }}
                   onChange={(e) => handleChange(e, "offset", i)}
@@ -104,7 +104,7 @@ const AcademicTableBody = ({ disciplines, setDisciplines }) => {
               <TableCell>
                 <TextField
                   sx={{ width: "100px" }}
-                  value={item.exam ? item.exam : ""}
+                  value={item.exam}
                   type="number"
                   InputProps={{ inputProps: { min: 0, max: 150 } }}
                   onChange={(e) => handleChange(e, "exam", i)}

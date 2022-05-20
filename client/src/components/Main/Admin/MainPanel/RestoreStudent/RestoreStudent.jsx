@@ -1,7 +1,7 @@
 import { Box, Typography, Button } from "@mui/material";
 import React, { useState } from "react";
 import { AdminApi } from "../../../../../ClassesApi/AdminApi";
-import SelectGroup from "../SelectGroup/SelectGroup";
+import SelectGroup from "./SelectGroup/SelectGroup";
 import SelectStudents from "./SelectStudents/SelectStudents";
 
 const RestoreStudent = () => {

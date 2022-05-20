@@ -15,19 +15,17 @@ const EditDiscipline = () => {
       setAllInfoDiscipline(res)
     );
   }, [discipline]);
-  console.log(allInfoDiscipline);
   const handleClick = () => {
-    AdminApi.updateDiscipline(allInfoDiscipline).then((res) =>
-      console.log(res)
-    );
+    AdminApi.updateDiscipline(allInfoDiscipline);
   };
+  console.log(allInfoDiscipline);
   return (
     <Box sx={{ display: "flex", flexDirection: "column" }}>
       <Typography
         variant="h6"
         sx={{ width: "100%", mb: 2, textAlign: "center" }}
       >
-        Изменение учителя
+        Измененить дисциплину
       </Typography>
       <SelectSpeciality speciality={speciality} setSpeciality={setSpeciality} />
       <SelectDisciplines
@@ -59,8 +57,8 @@ const EditDiscipline = () => {
             />
             <FormInput
               label="Семестр"
-              value={item.semester_begin}
-              valueKey="semester_begin"
+              value={item.semester}
+              valueKey="semester"
               arr={allInfoDiscipline}
               setValue={setAllInfoDiscipline}
               text="семестр"

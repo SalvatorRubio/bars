@@ -1,20 +1,12 @@
-import React, { useState } from "react";
+import React from "react";
+import { Controller, useFormContext } from "react-hook-form";
 import { Typography, TextField } from "@mui/material";
 
-const Pair = ({ setPair }) => {
-  const [isCorrect, setCorrect] = useState(false);
-  const [value, setValue] = useState("");
-  const nums = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-  const handleChange = (e) => {
-    if (e.target.value !== "" && nums.includes(Number(e.target.value))) {
-      setCorrect(false);
-      setPair(e.target.value);
-      setValue(e.target.value);
-    } else {
-      setCorrect(true);
-      setValue(e.target.value);
-    }
-  };
+const Pair = () => {
+  const {
+    control,
+    formState: { errors },
+  } = useFormContext();
   return (
     <>
       <Typography
@@ -23,11 +15,21 @@ const Pair = ({ setPair }) => {
       >
         Введите номер пары
       </Typography>
-      {isCorrect ? (
-        <TextField onChange={handleChange} error label="Пара" value={value} />
-      ) : (
-        <TextField onChange={handleChange} value={value} label="Пара" />
-      )}
+      <Controller
+        name="pair"
+        control={control}
+        rules={{ required: true }}
+        render={({ field: { onChange, value } }) => (
+          <TextField
+            onChange={onChange}
+            value={value}
+            label="Пара"
+            type="number"
+            error={!!errors.pair}
+            helperText={errors.pair && "Выберите пару"}
+          />
+        )}
+      />
     </>
   );
 };

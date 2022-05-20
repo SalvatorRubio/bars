@@ -21,8 +21,10 @@ const AcademicPlan = () => {
   const [value, setValue] = useState();
   const [disciplines, setDisciplines] = useState([]);
   const [speciality, setSpeciality] = useState("");
+  const [lengthDiscip, setLengthDiscip] = useState("");
 
   const handleChange = (e) => {
+    setLengthDiscip(e.target.value);
     const arr = new Array(Number(e.target.value));
     arr.fill(obj, 0, arr.length);
     const result = arr.map((item, i) => {
@@ -34,6 +36,9 @@ const AcademicPlan = () => {
 
   const handleClick = () => {
     AdminApi.insertAcademicPlan(value, speciality, disciplines);
+    setLengthDiscip("");
+    setDisciplines([]);
+    setSpeciality("");
   };
 
   return (
@@ -62,6 +67,7 @@ const AcademicPlan = () => {
           variant="outlined"
           InputProps={{ inputProps: { min: 0, max: 50 } }}
           type="number"
+          value={lengthDiscip}
           onChange={handleChange}
         />
       </Box>

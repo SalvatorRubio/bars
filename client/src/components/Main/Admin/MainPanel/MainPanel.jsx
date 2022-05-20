@@ -18,6 +18,7 @@ import AcademicPlan from "./AcademicPlan/AcademicPlan";
 import RestoreStudent from "./RestoreStudent/RestoreStudent";
 import EditTeacher from "./EditTeacher/EditTeacher";
 import EditDiscipline from "./EditDiscipline/EditDiscipline";
+import EditSemester from "./EditSemester/EditSemester";
 
 const MainPanel = () => {
   return (
@@ -41,6 +42,7 @@ const MainPanel = () => {
           <Route path="create-group" element={<CreateGroup />} />
           <Route path="release-group" element={<DeleteGroup />} />
           <Route path="edit-group" element={<EditGroup />} />
+          <Route path="edit-semester" element={<EditSemester />} />
           <Route path="create-speciality" element={<CreateSpeciality />} />
           <Route path="create-auditorium" element={<CreateAuditorium />} />
           <Route path="delete-auditorium" element={<DeleteAuditorium />} />

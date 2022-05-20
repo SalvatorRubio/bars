@@ -9,7 +9,7 @@ import { AdminApi } from "../../../../../../ClassesApi/AdminApi";
 
 const SelectStudents = ({ student, setStudent }) => {
   const [kickedStudents, setKickedStudents] = useState([]);
-
+  console.log(kickedStudents);
   useEffect(() => {
     AdminApi.getKickedStudents().then((res) => setKickedStudents(res));
   }, []);
@@ -34,7 +34,7 @@ const SelectStudents = ({ student, setStudent }) => {
                 {item.surname} {item.studentName} {item.father_name} -{" "}
                 {item.course}
                 {item.specName}
-                {item.number}
+                {item.number} - {item.year}
               </MenuItem>
             );
           })}

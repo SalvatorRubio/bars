@@ -7,7 +7,7 @@ const TableTeacher = (props) => {
   const [middleMarksByTypes, setMiddleMarksByTypes] = useState([]);
   return (
     <Paper elevation={0} sx={{ width: "100%", marginTop: "10px" }}>
-      <TableContainer sx={{ maxHeight: 640 }}>
+      <TableContainer sx={{ maxHeight: 550 }}>
         <Table stickyHeader>
           <TableHeader
             item={props}

@@ -50,7 +50,7 @@ export class ClassTeacher {
   static getQualityAttestationKnowledge(
     firstDate,
     secondDate,
-    discipline,
+
     group
   ) {
     let dateFrom = format(new Date(firstDate), "yyyy-MM-dd");
@@ -59,43 +59,35 @@ export class ClassTeacher {
       .post("classroomTeacher/selectQualityAttestationKnowledge.php", {
         dateFrom: dateFrom,
         dateTo: dateTo,
-        discipline: discipline,
+
         group: group,
       })
       .then((res) => res.data);
   }
 
-  static getAbsoluteAttestationKnowledge(
-    firstDate,
-    secondDate,
-    discipline,
-    group
-  ) {
+  static getAbsoluteAttestationKnowledge(firstDate, secondDate, group) {
     let dateFrom = format(new Date(firstDate), "yyyy-MM-dd");
     let dateTo = format(new Date(secondDate), "yyyy-MM-dd");
     return axios
       .post("classroomTeacher/selectAbsoluteAttestationKnowledge.php", {
         dateFrom: dateFrom,
         dateTo: dateTo,
-        discipline: discipline,
         group: group,
       })
       .then((res) => res.data);
   }
 
-  static getAbsoluteSessionKnowledge(discipline, group) {
+  static getAbsoluteSessionKnowledge(group) {
     return axios
       .post("classroomTeacher/selectAbsoluteSessionKnowledge.php", {
-        discipline: discipline,
         group: group,
       })
       .then((res) => res.data);
   }
 
-  static getQualitySessionKnowledge(discipline, group) {
+  static getQualitySessionKnowledge(group) {
     return axios
       .post("classroomTeacher/selectQualitySessionKnowledge.php", {
-        discipline: discipline,
         group: group,
       })
       .then((res) => res.data);

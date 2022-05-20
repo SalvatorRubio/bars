@@ -11,9 +11,10 @@ import { useAuth } from "../../../../hook/useAuth";
 import { StudentApi } from "../../../../ClassesApi/StudentApi";
 import { format } from "date-fns";
 
+const now = new Date();
+const tomorrow = new Date(now.getTime() + 24 * 60 * 60 * 1000);
+
 const SheduleStudent = () => {
-  const now = new Date();
-  const tomorrow = new Date(now.getTime() + 24 * 60 * 60 * 1000);
   const [date, setDate] = useState("");
   const [lessonsList, setLessonsList] = useState([]);
   const arrNumPairs = [1, 2, 3, 4, 5, 6, 7, 8];
@@ -40,16 +41,14 @@ const SheduleStudent = () => {
                 <TableCell
                   sx={{
                     borderLeft: "1px solid #ccc",
-                    position: "relative",
+                    align: "center",
+                    justifyContent: "space-between",
+                    display: "flex",
                   }}
-                  align="center"
                 >
                   {lesson.discipline}
                   <Typography
                     sx={{
-                      position: "absolute",
-                      bottom: 0,
-                      left: 5,
                       fontSize: "12px",
                     }}
                   >
@@ -57,9 +56,6 @@ const SheduleStudent = () => {
                   </Typography>
                   <Typography
                     sx={{
-                      position: "absolute",
-                      top: 0,
-                      right: 5,
                       fontSize: "12px",
                     }}
                   >
@@ -78,7 +74,6 @@ const SheduleStudent = () => {
             <TableCell
               sx={{
                 borderLeft: "1px solid #ccc",
-                position: "relative",
               }}
               align="center"
             ></TableCell>

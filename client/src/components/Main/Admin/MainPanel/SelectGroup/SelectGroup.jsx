@@ -6,9 +6,14 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import { AdminApi } from "../../../../../ClassesApi/AdminApi";
+import { useFormContext, Controller } from "react-hook-form";
 
-const SelectGroup = ({ group, setGroup }) => {
+const SelectGroup = () => {
   const [groupsArr, setGroupsArr] = useState([]);
+  const {
+    control,
+    formState: { errors },
+  } = useFormContext();
   useEffect(() => {
     AdminApi.getGroups().then((res) => setGroupsArr(res));
   }, []);
@@ -18,26 +23,27 @@ const SelectGroup = ({ group, setGroup }) => {
       <Typography sx={{ width: "100%", maxWidth: "250px" }} variant="p">
         Выберите группу
       </Typography>
-      <FormControl fullWidth>
-        <InputLabel>Группа</InputLabel>
-        <Select
-          value={group}
-          label="Группа"
-          onChange={(e) => {
-            setGroup(e.target.value);
-          }}
-        >
-          {groupsArr.map((item) => {
-            return (
-              <MenuItem key={item.groups_id} value={item.groups_id}>
-                {item.course}
-                {item.name}
-                {item.number}
-              </MenuItem>
-            );
-          })}
-        </Select>
-      </FormControl>
+      <Controller
+        control={control}
+        name="group"
+        rules={{ required: true }}
+        render={({ field: { onChange, value } }) => (
+          <FormControl fullWidth error={!!errors.group}>
+            <InputLabel>Группа</InputLabel>
+            <Select value={value} label="Группа" onChange={onChange}>
+              {groupsArr.map((item) => {
+                return (
+                  <MenuItem key={item.groups_id} value={item.groups_id}>
+                    {item.course}
+                    {item.name}
+                    {item.number}
+                  </MenuItem>
+                );
+              })}
+            </Select>
+          </FormControl>
+        )}
+      />
     </Box>
   );
 };

@@ -6,8 +6,8 @@ export class StudentApi {
     const tomorrow = format(new Date(date), "yyyy-MM-dd");
     return axios
       .post("student/selectShedule.php", {
-        // date: tomorrow,
-        date: "2022-03-27",
+        date: tomorrow,
+        // date: "2022-03-27",
         group: group,
       })
       .then((res) => res.data);

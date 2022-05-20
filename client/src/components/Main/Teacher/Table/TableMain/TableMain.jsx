@@ -11,7 +11,7 @@ const TableMain = (props) => {
   const { id, group } = useAuth();
   const [isEdit, setIsEdit] = useState(false);
   const [itemIdToEdit, setItemIdToEdit] = useState();
-  const [value, setValue] = useState();
+  const [selectedMark, setSelectedMark] = useState();
   const [absoluteKnowledge, setAbsoluteKnowledge] = useState([]);
   const [qualityKnowledge, setQualityKnowledge] = useState([]);
   useEffect(() => {
@@ -29,7 +29,7 @@ const TableMain = (props) => {
       group,
       lessonType
     ).then((res) => setAbsoluteKnowledge(res));
-  }, [group, dates, value, discipline, lessonType]);
+  }, [group, dates, selectedMark, discipline, lessonType]);
 
   useEffect(() => {
     TeacherApi.getStudentAndMarks(
@@ -41,14 +41,13 @@ const TableMain = (props) => {
       dates[1]
     ).then((res) => setRows(res));
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [value]);
+  }, [selectedMark]);
 
   const handleChange = (e, mark) => {
     setIsEdit(true);
     setItemIdToEdit(e.target.id);
-    setValue(mark);
+    setSelectedMark(mark);
   };
-
   return (
     <TableBody>
       {rows.map((item, index) => {
@@ -56,7 +55,7 @@ const TableMain = (props) => {
         let splitShedule = item.shedule_id.split(",");
         return (
           <TableRow hover tabIndex={-1} key={item.student_id}>
-            <TableCell sx={{ maxWidth: "215px", height: "20px" }}>
+            <TableCell sx={{ maxWidth: "300px", height: "20px" }}>
               {index + 1}.{item.surname} {item.name}
             </TableCell>
             {splitMarks.map((itemMark, i) => {
@@ -67,8 +66,8 @@ const TableMain = (props) => {
                     shedule={splitShedule[i]}
                     key={i}
                     setIsEdit={setIsEdit}
-                    setValue={setValue}
-                    value={value}
+                    setValue={setSelectedMark}
+                    value={selectedMark}
                   />
                 );
               } else {
@@ -91,6 +90,14 @@ const TableMain = (props) => {
           </TableRow>
         );
       })}
+      <TableRow>
+        <TableCell></TableCell>
+        {rows.length > 0 &&
+          rows[0].mark.split(",").map((item, index) => {
+            return <TableCell key={index}></TableCell>;
+          })}
+        <TableCell></TableCell>
+      </TableRow>
       <TableRow>
         <TableCell>Качество знаний</TableCell>
         <TableCell sx={{ textAlign: " center", borderRight: "1px solid #ccc" }}>

@@ -16,7 +16,6 @@ const SelectDisciplines = ({ discipline, setDiscipline, speciality }) => {
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [speciality]);
-
   return (
     <Box sx={{ display: "flex", alignItems: "center", m: "10px 0" }}>
       <Typography sx={{ width: "100%", maxWidth: "250px" }} variant="p">
@@ -32,7 +31,7 @@ const SelectDisciplines = ({ discipline, setDiscipline, speciality }) => {
           {disciplinesArr.map((item) => {
             return (
               <MenuItem key={item.discipline_id} value={item.discipline_id}>
-                {item.name}
+                {item.name} - {item.semester} семестр
               </MenuItem>
             );
           })}

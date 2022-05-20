@@ -26,13 +26,17 @@ const SelectTeacher = ({ teacher, setTeacher }) => {
           label="Преподаватель"
           onChange={(e) => setTeacher(e.target.value)}
         >
-          {teachersArr.map((item) => {
-            return (
-              <MenuItem key={item.teacher_id} value={item.teacher_id}>
-                {item.surname} {item.name} {item.father_name}
-              </MenuItem>
-            );
-          })}
+          {
+            // eslint-disable-next-line array-callback-return
+            teachersArr.map((item) => {
+              if (Number(item.type) === 0)
+                return (
+                  <MenuItem key={item.teacher_id} value={item.teacher_id}>
+                    {item.surname} {item.name} {item.father_name}
+                  </MenuItem>
+                );
+            })
+          }
         </Select>
       </FormControl>
     </Box>

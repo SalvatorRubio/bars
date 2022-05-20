@@ -4,10 +4,14 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
-
+import { useFormContext, Controller } from "react-hook-form";
 import { AdminApi } from "../../../../../../ClassesApi/AdminApi";
 
-const SelectSpeciality = ({ speciality, setSpeciality }) => {
+const SelectSpeciality = () => {
+  const {
+    control,
+    formState: { errors },
+  } = useFormContext();
   const [specialitiesArr, setSpecialitiesArr] = useState([]);
   useEffect(() => {
     AdminApi.getSpeciality().then((res) => setSpecialitiesArr(res));
@@ -18,22 +22,25 @@ const SelectSpeciality = ({ speciality, setSpeciality }) => {
       <Typography sx={{ width: "100%", maxWidth: "250px" }} variant="p">
         Выберите специальность
       </Typography>
-      <FormControl fullWidth>
-        <InputLabel id="demo-simple-select-label">Специальность</InputLabel>
-        <Select
-          value={speciality}
-          label="Специальность"
-          onChange={(e) => setSpeciality(e.target.value)}
-        >
-          {specialitiesArr.map((item) => {
-            return (
-              <MenuItem key={item.spec_id} value={item.spec_id}>
-                {item.long_name}
-              </MenuItem>
-            );
-          })}
-        </Select>
-      </FormControl>
+      <Controller
+        control={control}
+        name="speciality"
+        rules={{ required: true }}
+        render={({ field: { onChange, value } }) => (
+          <FormControl fullWidth error={!!errors.speciality}>
+            <InputLabel>Специальность</InputLabel>
+            <Select value={value} label="Специальность" onChange={onChange}>
+              {specialitiesArr.map((item) => {
+                return (
+                  <MenuItem key={item.spec_id} value={item.spec_id}>
+                    {item.long_name}
+                  </MenuItem>
+                );
+              })}
+            </Select>
+          </FormControl>
+        )}
+      />
     </Box>
   );
 };

@@ -6,25 +6,38 @@ import {
   InputLabel,
   Select,
   MenuItem,
+  FormHelperText,
 } from "@mui/material";
+import { Controller, useFormContext } from "react-hook-form";
 
-const GroupView = ({ setGroupView, groupView }) => {
-  const handleChange = (e) => {
-    setGroupView(e.target.value);
-  };
+const GroupView = () => {
+  const {
+    control,
+    formState: { errors },
+  } = useFormContext();
   return (
     <Box sx={{ display: "flex", alignItems: "center", m: "10px 0" }}>
       <Typography sx={{ width: "100%", maxWidth: "250px" }} variant="p">
         Выберите вид группы
       </Typography>
-      <FormControl fullWidth>
-        <InputLabel>Вид группы</InputLabel>
-        <Select value={groupView} label="Вид группы" onChange={handleChange}>
-          <MenuItem value="Вся группа">Вся группа</MenuItem>
-          <MenuItem value="1 п/г">Первая подгруппа</MenuItem>
-          <MenuItem value="2 п/г">Вторая подгруппа</MenuItem>
-        </Select>
-      </FormControl>
+      <Controller
+        rules={{ required: true }}
+        name="groupView"
+        control={control}
+        render={({ field: { onChange, value } }) => (
+          <FormControl fullWidth error={errors.groupView}>
+            <InputLabel>Вид группы</InputLabel>
+            <Select value={value} label="Вид группы" onChange={onChange}>
+              <MenuItem value="Вся группа">Вся группа</MenuItem>
+              <MenuItem value="1 п/г">Первая подгруппа</MenuItem>
+              <MenuItem value="2 п/г">Вторая подгруппа</MenuItem>
+            </Select>
+            {errors.groupView && (
+              <FormHelperText>Выберите вид группы</FormHelperText>
+            )}
+          </FormControl>
+        )}
+      />
     </Box>
   );
 };

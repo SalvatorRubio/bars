@@ -11,6 +11,7 @@ import ListItemText from "@mui/material/ListItemText";
 import GroupsIcon from "@mui/icons-material/Groups";
 import CreateIcon from "@mui/icons-material/Create";
 import BeenhereIcon from "@mui/icons-material/Beenhere";
+import EditRoadIcon from "@mui/icons-material/EditRoad";
 import GroupAddIcon from "@mui/icons-material/GroupAdd";
 import { useNavigate } from "react-router-dom";
 
@@ -48,6 +49,12 @@ const GroupAccord = ({ handleChange, expanded }) => {
               <GroupAddIcon sx={{ color: "black" }} />
             </ListItemIcon>
             <ListItemText sx={{ color: "black" }} primary="Изменить группу" />
+          </ListItemButton>
+          <ListItemButton onClick={() => navigate("edit-semester")}>
+            <ListItemIcon>
+              <EditRoadIcon sx={{ color: "black" }} />
+            </ListItemIcon>
+            <ListItemText sx={{ color: "black" }} primary="Изменить семестр" />
           </ListItemButton>
         </List>
       </AccordionDetails>

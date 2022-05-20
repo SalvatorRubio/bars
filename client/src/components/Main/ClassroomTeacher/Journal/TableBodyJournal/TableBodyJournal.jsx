@@ -85,8 +85,8 @@ const TableBodyJournal = ({ group, disciplines, dates }) => {
             }}
             key={item.id}
           >
-            <TableCell>
-              {i + 1} {item.surname} {item.name} {item.fatherName}
+            <TableCell sx={{ width: "250px" }}>
+              {i + 1}. {item.surname} {item.name} {item.fatherName}
             </TableCell>
             {disciplines.map((el, idx) => {
               if (item.disciplines.find((it) => it.name === el.name)) {

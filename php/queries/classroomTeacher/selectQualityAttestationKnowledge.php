@@ -6,4 +6,4 @@ require_once $_SERVER['DOCUMENT_ROOT'].'/php/classes/ClassroomTeacher.php';
 
 $data = json_decode(file_get_contents('php://input'), true);
 
-print json_encode($classroom_teacher->selectKnowledgeForAttestation('selectQualityAttestationKnowledgeForClassroomTeacher', $data['dateFrom'], $data['dateTo'], $data['discipline'], $data['group']));
+print json_encode($classroom_teacher->selectKnowledgeForAttestation('selectQualityAttestationKnowledgeForClassroomTeacher', $data['dateFrom'], $data['dateTo'], $data['group']));

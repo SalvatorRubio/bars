@@ -21,10 +21,10 @@ const SelectDisciplines = ({ discipline, setDiscipline, group }) => {
         Выберите дисциплину
       </Typography>
       <FormControl fullWidth>
-        <InputLabel id="demo-simple-select-label">Группа</InputLabel>
+        <InputLabel>Дисциплина</InputLabel>
         <Select
           value={discipline}
-          label="Группа"
+          label="Дисциплина"
           onChange={(e) => setDiscipline(e.target.value)}
         >
           {disciplinesArr.map((item) => {
